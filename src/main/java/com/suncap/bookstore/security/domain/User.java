@@ -1,4 +1,4 @@
-package com.suncap.bookstore.security;
+package com.suncap.bookstore.security.domain;
 
 import java.io.Serializable;
 import java.util.Collection;
