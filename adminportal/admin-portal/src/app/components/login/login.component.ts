@@ -27,6 +27,17 @@ export class LoginComponent implements OnInit {
       );
   }
 
+  logout(){
+    this.loginService.logout().subscribe(
+      res => {
+        location.reload();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
   ngOnInit() {
     this.loginService.checkSession().subscribe(
       res => {
@@ -37,5 +48,4 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
 }
