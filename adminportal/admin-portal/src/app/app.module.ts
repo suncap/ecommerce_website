@@ -8,9 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import 'hammerjs';
 
+import { LoginService } from './services/login.service';
+import { AddBookService } from './services/add-book.service';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { LoginService } from './services/login.service';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { AddnewbookComponent } from './components/addnewbook/addnewbook.component';
 
@@ -30,7 +32,8 @@ import { AddnewbookComponent } from './components/addnewbook/addnewbook.componen
     BrowserAnimationsModule
   ],
   providers: [
-    LoginService
+    LoginService,
+    AddBookService
   ],
   bootstrap: [AppComponent]
 })
