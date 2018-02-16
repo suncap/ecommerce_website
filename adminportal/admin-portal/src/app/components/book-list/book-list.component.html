@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="table-responsive" style="margin-top: 30px;">
+    <table id="bookListTable" class="table bordered">
+      <thead>
+        <tr>
+          <th>
+            <input type="checkbox" (change)="updateSelected($event.target.checked)" />
+          </th>
+          <th>
+            Title
+          </th>
+          <th>
+            Author
+          </th>
+          <th>
+            Category
+          </th>
+          <th>
+            List Price
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFo="let book of booklist">
+          <td>
+            <input hidden="hidden" name="id" />
+            <input type="checkbox" [checked]="allChcked" (change)="updateRemoveBookList($event.target.checked, book)" />
+          </td>
+          <td>
+            <a (click)="onSelect(book)"> {{book.title}} </a>
+          </td>
+          <td>
+             {{book.author}}
+          </td>
+          <td>
+             {{book.category}}
+          </td>
+          <td>
+             {{book.listPrice}}
+          </td>
+          <td>
+            <input hidden="hidden" name="id"/>
+            <button mat-button (click)="opneDialog(book)" value="delete">
+              <span class="fa fa-times"></span> delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button mat-raised-button class="mat-warn" id="deleteSelected" (click)="removeSelectedBooks()">Delete Selected</button>
+</div>

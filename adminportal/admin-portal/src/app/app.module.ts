@@ -16,13 +16,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { AddnewbookComponent } from './components/addnewbook/addnewbook.component';
+import { BookListComponent } from './components/book-list/book-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavBarComponent,
-    AddnewbookComponent
+    AddnewbookComponent,
+    BookListComponent
   ],
   imports: [
     BrowserModule,
