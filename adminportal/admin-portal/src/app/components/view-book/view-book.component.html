@@ -1,0 +1,24 @@
+<div class="container">
+    <div>
+      <a routerLisnk="bookList">Go back</a>
+      <a (click)="onSelect(book)" style="cursor: pointer">Edit</a>
+    </div>
+    <mat-grid-list cols="6" [style.margin-top]="'20px'">
+      <mat-grid-tile [colspan]="3" [rowspan]="5">
+        <div class="panel">
+          <div class="panel-body">
+            <img [src]="'http://localhost:8181/image/book/'+book.id+'.png'" class="responsive-img"/>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="3" [rowspan]="5">
+        <mad-list>
+          <mad-list-item>
+            <p>
+              <strong>Our Price: {{book.ourPrice}}</p>
+            </p>
+          </mad-list-ite>
+        </mad-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+</div>

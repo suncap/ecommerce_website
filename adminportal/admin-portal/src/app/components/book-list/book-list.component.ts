@@ -10,14 +10,20 @@ import { Router } from '@angular/router';
 })
 export class BookListComponent implements OnInit {
 
-  private selecetdBook: Book;
+  private selectedBook: Book;
   private checked: boolean;
   private bookList: Book[];
   private allChcked: boolean;
   private removeBookList:Book[] = new Array();
+
   constructor(
     private getBookListService: GetbooklistserviceService,
     private router: Router) { }
+
+  onSelect(book: Book){
+      this.selectedBook = book;
+      this.router.navigate(['/viewBook',this.selectedBook.id]);
+  }
 
   ngOnInit() {
     this.getBookListService.getBookList().subscribe(
