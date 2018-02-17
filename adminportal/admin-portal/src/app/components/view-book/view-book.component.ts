@@ -15,6 +15,10 @@ export class ViewBookComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private getBookService: GetBookService) { }
 
+  onSelect(book:Book){
+      this.router.navigate(['/editBook', this.book.id]).then(s => location.reload());
+  }
+
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       this.bookId = Number.parseInt(params['id']);

@@ -3,6 +3,8 @@ package com.suncap.bookstore.resource;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -67,6 +69,33 @@ public class BookResource {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Book updateBookPost(@RequestBody Book book){
 		return bookService.save(book);
+	}
+	
+	@RequestMapping(value = "/update/image", method = RequestMethod.POST)
+	public ResponseEntity updateImage(@RequestParam("id") Long id, HttpServletResponse response, HttpServletRequest request) {
+		try {
+			Book book = bookService.findOne(id);
+			if(book == null) {
+				return new ResponseEntity<>("upload failed", HttpStatus.BAD_REQUEST);
+			}
+			
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+			Iterator<String> it = multipartRequest.getFileNames();
+			MultipartFile multipartFile = multipartRequest.getFile(it.next());
+			String fileName = id + ".png";
+			
+			Files.delete(Paths.get("src/main/resources/static/images/" + fileName));
+			
+			byte[] bytes = multipartFile.getBytes();
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("src/main/resources/static/images/" + fileName)));
+			stream.write(bytes);
+			stream.close();
+			
+			return new ResponseEntity<>("upload success", HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("upload failed", HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping("/list")

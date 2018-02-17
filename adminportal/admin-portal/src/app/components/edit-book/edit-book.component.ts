@@ -14,7 +14,7 @@ export class EditBookComponent implements OnInit {
 
   private bookId:number;
   private book: Book = new Book();
-  private bookUploaded: boolean = false;
+  private bookUpdated: boolean = false;
 
   constructor(private uploadImageService:UploadFileService,
   private editBookService: EditBootService,
@@ -28,9 +28,9 @@ export class EditBookComponent implements OnInit {
         this.uploadImageService.modify(
             JSON.parse(JSON.parse(JSON.stringify(data))._data)
           );
-          this.bookUploaded = true;
+          this.bookUpdated = true;
         }, error => {
-          console.log(error); 
+          console.log(error);
         }
     );
   }

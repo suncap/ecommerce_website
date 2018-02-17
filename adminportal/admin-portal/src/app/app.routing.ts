@@ -4,6 +4,7 @@ import { LoginComponent} from './components/login/login.component';
 import { AddnewbookComponent} from './components/addnewbook/addnewbook.component';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { ViewBookComponent } from './components/view-book/view-book.component';
+import { EditBookComponent } from './components/edit-book/edit-book.component';
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,10 @@ const appRoutes: Routes = [
   {
       path : 'viewBook/:id',
       component: ViewBookComponent
+  },
+  {
+      path : 'editBook/:id',
+      component: EditBookComponent
   }
 ];
 

@@ -1,3 +1,78 @@
-<p>
-  edit-book works!
-</p>
+<div class="container">
+  <div [hidden]="bookUpdated">
+    <h3 style="margin-top:30px;"> Update Book Information <span style="font-size:small">* is required field</span></h3>
+
+    <form (ngSubmit)="onSubmit()">
+      <mat-grid-list cols="4" rowHeight="60px">
+        <mat-input-container>
+          <input matInput id="title" type="text" required [(ngModel)]="book.title" name="title" placeholder="Title">
+        </mat-input-container>
+      </mat-grid-list>
+      <mat-grid-list cols="4" rowHeight="60px">
+        <mat-input-container>
+          <input matInput id="author" type="text" required [(ngModel)]="book.author" name="author" placeholder="Author">
+        </mat-input-container>
+      </mat-grid-list>
+      <mat-grid-list cols="4" rowHeight="60px">
+        <mat-input-container>
+          <input matInput id="publisher" type="text" required [(ngModel)]="book.publisher" name="publisher" placeholder="Publisher">
+        </mat-input-container>
+      </mat-grid-list>
+      <mat-grid-list cols="4" rowHeight="60px">
+        <mat-input-container>
+          <input matInput id="publicationDate" type="text" required [(ngModel)]="book.publicationDate" name="publicationDate" placeholder="Publication Date">
+        </mat-input-container>
+      </mat-grid-list>
+
+      <mat-grid-list cols="4" rowHeight="60px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+          <mat-select placeholder="Cetegory" id="category" name="category" [(ngModel)]="book.category">
+            <mat-option value="Management">Management</mat-option>
+            <mat-option value="Fiction">Fiction</mat-option>
+            <mat-option value="Engineering">Engineering</mat-option>
+            <mat-option value="Programming">Programming</mat-option>
+            <mat-option value="Arts &amp; Literature">Arts &amp; Literature</mat-option>
+          </mat-select>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+          <mat-select placeholder="Format" id="format" name="format" [(ngModel)]="book.format">
+            <mat-option value="paperback">Paperback</mat-option>
+            <mat-option value="pardcover">Hardcover</mat-option>
+          </mat-select>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list cols="4" rowHeight="60px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+          <mat-input-container>
+            <input matInput id="publicationDate" type="text" required [(ngModel)]="book.publicationDate" name="publicationDate" placeholder="Publication Date">
+          </mat-input-container>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+          <mat-input-container>
+            <input matInput id="publicationDate" type="text" required [(ngModel)]="book.publicationDate" name="publicationDate" placeholder="Publication Date">
+          </mat-input-container>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-input-container>
+        <textarea matInput id="description" type="text" required [(ngModel)]="book.description" name="description" placeholder="Description"></textarea>
+      </mat-input-container>
+
+      Image <input  id="tile" type="file" id="bookImage" name="bookImage" (change)="uploadImageService.fileChangeEvent($event)">
+      <br><br>
+
+      <mat-grid-list cols="20" rowHeight="60px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <button class="mat-primary" mat-raised-button type="submit">Add Book</button>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <a class="mat-warn" mat-raised-button routerLink="/">Cancel</a>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </div>
+  <div [hidden]="!bookUpdated">
+    Update successfully
+  </div>
+</div>
