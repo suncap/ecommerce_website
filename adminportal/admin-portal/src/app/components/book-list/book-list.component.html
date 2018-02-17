@@ -24,7 +24,7 @@
         <tr *ngFo="let book of booklist">
           <td>
             <input hidden="hidden" name="id" />
-            <input type="checkbox" [checked]="allChcked" (change)="updateRemoveBookList($event.target.checked, book)" />
+            <input type="checkbox" [checked]="allChecked" (change)="updateRemoveBookList($event.target.checked, book)" />
           </td>
           <td>
             <a (click)="onSelect(book)"> {{book.title}} </a>

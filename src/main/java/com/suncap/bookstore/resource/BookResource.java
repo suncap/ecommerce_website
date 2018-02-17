@@ -3,6 +3,7 @@ package com.suncap.bookstore.resource;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
@@ -106,5 +107,14 @@ public class BookResource {
 	@RequestMapping("/{id}")
 	public Book getBook(@PathVariable("id") Long id){
 		return bookService.findOne(id);
+	}
+	
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+	public ResponseEntity removeBookPost(@RequestBody String id) throws IOException{
+		bookService.removeOne(Long.parseLong(id));
+		String fileName = id + ".png";
+		Files.delete(Paths.get("src/main/resources/static/images/" + fileName));
+
+		return new ResponseEntity("remove success", HttpStatus.OK);
 	}
 }
