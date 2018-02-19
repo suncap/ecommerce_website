@@ -7,6 +7,9 @@ import { routing } from './app.routing';
 
 import 'hammer.js';
 
+import {LoginService} from './services/login.service';
+import {UserService} from './services/user.service';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
@@ -22,7 +25,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [LoginService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
