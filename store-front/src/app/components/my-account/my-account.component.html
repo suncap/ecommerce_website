@@ -1,3 +1,74 @@
-<p>
-  my-account works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8">
+        <h2 class="section-headline"><span>Home</span></h2>
+    </div>
+    <div class="col-xs-4">
+      <img src=""/>
+    </div>
+  </div>
+  <hr style="position: absolute; width: 85%; height: 6px;"/>
+  <div class="row">
+    <div class="col-xs-3"></div>
+    <div class="col-xs-9">
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <mat-tab-group>
+              <mat-tab label="Login">
+                <div>
+                  <div *ngIf"loginError">
+                    Incorrect username
+                  </div>
+
+                  <form (ngSubmit)="onLogin()">
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" name="username" [(ngModel)]="credential.username"
+                      autofocus="autofocus"/>
+                      <p>Enter username</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="password" name="password" [(ngModel)]="credential.password"
+                      autofocus="autofocus"/>
+                      <p>Enter password</p>
+                    </div>
+                    <button mat-raised-button type="submit" class="mat-primary">Submit</button>
+                  </form>
+                </div>
+              </mat-tab>
+              <mat-tab label="New Account">
+                <div>
+                  <div *ngIf"loginError">
+                    New Account not created
+                  </div>
+                  <form (ngSubmit)="onNewAccount()">
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" name="username" [(ngModel)]="username"
+                      autofocus="autofocus"/>
+                      <p>Enter username</p>
+                      <span *ngIf="usernameExists">username  exists</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="password" name="password" [(ngModel)]="password"
+                      autofocus="autofocus"/>
+                      <p>Enter password</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="password" name="email" [(ngModel)]="email" required="required"/>
+                      <p>Enter password</p>
+                    </div>
+                    <button mat-raised-button type="submit" class="mat-primary">Submit</button>
+                  </form>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
