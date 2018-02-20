@@ -18,6 +18,26 @@ import com.suncap.bookstore.service.UserService;
 @Service
 public class UserServiceImpl implements UserService{
 	
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public User findByEmail(String mail) {
+		return  userRepository.findByEmail(mail);
+	}
+
+	@Override
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+
+	@Override
+	public User findById(Long id) {
+		return userRepository.findOne(id);
+	}
+
 	private final static Logger LOG = LoggerFactory.getLogger(UserService.class);
 	
 	@Autowired
