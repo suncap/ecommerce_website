@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class MyProfileComponent implements OnInit {
 
   private serverPath = AppConst.serverPath;
-  private dateFetch = false;
+  private dataFetch = false;
   private loginError:boolean;
   private loggedIn:boolean;
   private credential = {'username':'','password':''};
@@ -22,11 +22,12 @@ export class MyProfileComponent implements OnInit {
   private updateSuccess:boolean;
   private newPassword: string;
   private incorrectPassword: boolean;
+  private currentPassword: string;
 
   constructor(private loginService:LoginService, private userService:UserService, private router:Router) { }
 
   onUpdateUserInfo(){
-      this.userService.updateUserInfo(this.user, this.newPassword).subscribe(
+      this.userService.updateUserInfo(this.user, this.newPassword, this.currentPassword).subscribe(
         res => {
             console.log(res.text());
             this.updateSuccess = true;
@@ -40,6 +41,18 @@ export class MyProfileComponent implements OnInit {
 
   }
 
+  getCurrentUser(){
+        this.userService.getCurrentUser().subscribe(
+          res => {
+            this.user = res.json();
+            this.dataFetch = true;
+          },
+          error => {
+            console.log(error);
+          }
+        );
+  }
+
   ngOnInit() {
     this.loginService.checkSession().subscribe(
       res => {
@@ -50,6 +63,7 @@ export class MyProfileComponent implements OnInit {
         this.router.navigate(['/myAccount']);
       }
     );
+    this.getCurrentUser();
   }
 
 }

@@ -1,5 +1,6 @@
 package com.suncap.bookstore.resource;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.suncap.bookstore.security.config.SecurityConfig;
 import com.suncap.bookstore.security.config.SecurityUtility;
 import com.suncap.bookstore.security.domain.Role;
 import com.suncap.bookstore.security.domain.User;
@@ -123,5 +125,12 @@ public class UserResource {
 		userService.save(user);
 		
 		return new ResponseEntity("email sent!", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getCurrentUser")
+	public User getCurrentUser(Principal principal) throws Exception{
+		if(principal.getName() == null) return null;
+		User user = userService.findByUsername(principal.getName());
+		return user;
 	}
 }
