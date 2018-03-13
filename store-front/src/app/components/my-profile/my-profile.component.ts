@@ -3,7 +3,7 @@ import { AppConst } from '../../constants/app-const';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/User';
 import { LoginService} from '../../services/login.service';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
@@ -23,7 +23,7 @@ export class MyProfileComponent implements OnInit {
   private newPassword: string;
   private incorrectPassword: boolean;
 
-  constructor(private loginService:LoginService, private userService:UserService) { }
+  constructor(private loginService:LoginService, private userService:UserService, private router:Router) { }
 
   onUpdateUserInfo(){
       this.userService.updateUserInfo(this.user, this.newPassword).subscribe(
@@ -41,6 +41,15 @@ export class MyProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loginService.checkSession().subscribe(
+      res => {
+        this.loggedIn = true;
+      },
+      error => {
+        this.loggedIn = false;
+        this.router.navigate(['/myAccount']);
+      }
+    );
   }
 
 }

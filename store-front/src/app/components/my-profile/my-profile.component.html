@@ -1,3 +1,58 @@
-<p>
-  my-profile works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8">
+      <img/>
+    </div>
+    <div class="col-xs-4">
+      <img/>
+    </div>
+  </div>
+
+  <div *ngIf="!dataFetched">
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <md-spinner></md-spinner>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-3"></div>
+    <div *ngIf="dataFetched">
+      <div class="col-xs-9">
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <md-tag-group [selectedIndex]="selectedProfileTab">
+                <md-tab label="Edit">
+                  <div *ngIf="incorrectPassword">Incorrect password</div>
+                  <div *ngIf="updateSuccess">Update success</div>
+                  <form (ngSubmit)="onUpdateUserInfo()">
+                    <input type="hidden" name="id" [(ngModel)]="user.id"/>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xs-6">
+                          <label for="firstName">
+                            First name
+                          </label>
+                          <input type="text" class="form-control" id="fistName" name="firstName" [(ngModel)]="user.firstName"/>
+                        </div>
+                        <div class="col-xs-6">
+                          <label for="lastName">
+                            First name
+                          </label>
+                          <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="user.lastName"/>
+                        </div>
+                      </div>
+                    </div>
+                    <button md-raised-button type="submit" class="mat-primary" id="updateuserInfoButton">Save</button>
+                  </form>
+                </md-tab>
+              </md-tag-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

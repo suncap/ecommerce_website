@@ -89,4 +89,39 @@ public class UserResource {
 		
 		return new ResponseEntity("email sent!", HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/updateUserInfo", method=RequestMethod.POST)
+	public ResponseEntity profileInfo(@RequestBody HashMap<String,Object> mapper) throws Exception{
+		int id = (Integer) mapper.get("id");
+		String userEmail = mapper.get("email");
+		String userName = mapper.get("userName");
+		String newPassword = mapper.get("newPassword");
+		
+		User user = userService.findById(Long.valueOf(id));
+		
+		if(user == null) {
+			return new Exception("User not found", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(userService.findByUsername(userName) != null) {
+			if(userService.findByUsername(userName).getId() != user.getUserRoleId()) {
+				return new ResponseEntity("usernameExists", HttpStatus.BAD_REQUEST);
+			}
+		}
+
+		if(userService.findByEmail(userEmail) != null) {
+			if(userService.findByEmail(userEmail).getId() != user.getUserRoleId()) {
+				return new ResponseEntity("useremailExists", HttpStatus.BAD_REQUEST);
+			}
+		}
+
+		SecurityConfig securityConfig = new SecurityConfig();
+		if(newPassword != null && !newPassword.isEmpty() && !user.getPassword().equals(newPassword)) {
+			user.setPassword(SecurityUtility.passwordEncoder().encode(newPassword));
+		}
+		
+		userService.save(user);
+		
+		return new ResponseEntity("email sent!", HttpStatus.OK);
+	}
 }
