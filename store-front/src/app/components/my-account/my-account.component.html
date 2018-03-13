@@ -66,6 +66,21 @@
                   </form>
                 </div>
               </mat-tab>
+              <mat-tab label="Forget password">
+                <div>
+                  <div *ngIf"loginError">
+                    Forget password
+                  </div>
+                  <form (ngSubmit)="onForgetPassword()">
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="password" name="email" [(ngModel)]="email" required="required"/>
+                      <span *ngIf="emailExists">email doesn't exists</span>
+                    </div>
+                    <button mat-raised-button type="submit" class="mat-primary">Submit</button>
+                  </form>
+                </div>
+              </mat-tab>
             </mat-tab-group>
           </div>
         </div>
