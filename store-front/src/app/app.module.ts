@@ -9,6 +9,7 @@ import 'hammer.js';
 
 import {LoginService} from './services/login.service';
 import {UserService} from './services/user.service';
+import {PaymentService} from './services/payment.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -26,7 +27,7 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     FormsModule,
     HttpModule
   ],
-  providers: [LoginService,UserService],
+  providers: [LoginService,UserService,PaymentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

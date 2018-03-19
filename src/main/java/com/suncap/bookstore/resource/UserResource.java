@@ -129,8 +129,11 @@ public class UserResource {
 	
 	@RequestMapping(value="/getCurrentUser")
 	public User getCurrentUser(Principal principal) throws Exception{
-		if(principal.getName() == null) return null;
-		User user = userService.findByUsername(principal.getName());
-		return user;
+		if(principal != null) {
+			User user = userService.findByUsername(principal.getName());
+			return user;
+		}
+		
+		return new User();
 	}
 }
