@@ -11,6 +11,7 @@ import {LoginService} from './services/login.service';
 import {UserService} from './services/user.service';
 import {PaymentService} from './services/payment.service';
 import {ShippingService} from './services/shipping.service';
+import {BookService} from './services/book.service';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -28,7 +29,7 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     FormsModule,
     HttpModule
   ],
-  providers: [LoginService,UserService,PaymentService,ShippingService],
+  providers: [LoginService,UserService,PaymentService,ShippingService,BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
