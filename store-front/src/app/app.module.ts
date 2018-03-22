@@ -6,6 +6,8 @@ import { MaterialModule } from './material.module';
 import { routing } from './app.routing';
 
 import 'hammer.js';
+import { DataTableModule } from 'angular2-datatable';
+import { DataFilterPipe } from './components/book-list/data-filter.pipe';
 
 import {LoginService} from './services/login.service';
 import {UserService} from './services/user.service';
@@ -22,12 +24,14 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
   declarations: [
     AppComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    DataFilterPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    DataTableModule
   ],
   providers: [LoginService,UserService,PaymentService,ShippingService,BookService],
   bootstrap: [AppComponent]
