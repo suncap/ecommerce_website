@@ -22,60 +22,47 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class User implements UserDetails, Serializable {
+public class User implements UserDetails, Serializable{
 
-	private static final long serialVersionUID = -12635161693001549L;
-
+	private static final long serialVersionUID = 902783495L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id", nullable = false, updatable = false)
-	private long userRoleId;
-
+	@Column(name="Id", nullable=false, updatable = false)
+	private Long id;
+	
 	private String username;
 	private String password;
-	private String firstname;
-	private String lastname;
-
+	private String firstName;
+	private String lastName;
+	
 	private String email;
 	private String phone;
 	private boolean enabled = true;
-
+	
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	private Set<UserRole> userRoles = new HashSet<>();
+	
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
+	private List<UserPayment> userPaymentList;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
+	private List<UserShipping> userShippingList;
+	
 	@OneToOne(cascade=CascadeType.ALL, mappedBy = "user")
 	private ShoppingCart shoppingCart;
 
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonIgnore
-	private Set<UserRole> userRole = new HashSet<>();
-
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
-	private List<UserPayment> userPaymentList;
+	@OneToMany(mappedBy="user")
+	private List<Order> orderList;
 	
-	@OneToMany(cascade=CascadeType.ALL,mappedBy="user")
-	private List<UserShipping> userShippingList;
-	
-	public List<UserShipping> getUserShippingList() {
-		return userShippingList;
+	public Long getId() {
+		return id;
 	}
 
-	public void setUserShippingList(List<UserShipping> userShippingList) {
-		this.userShippingList = userShippingList;
-	}
-
-	public List<UserPayment> getUserPaymentList() {
-		return userPaymentList;
-	}
-
-	public void setUserPaymentList(List<UserPayment> userPaymentList) {
-		this.userPaymentList = userPaymentList;
-	}
-
-	public long getUserRoleId() {
-		return userRoleId;
-	}
-
-	public void setUserRoleId(long userRoleId) {
-		this.userRoleId = userRoleId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -94,20 +81,20 @@ public class User implements UserDetails, Serializable {
 		this.password = password;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -126,45 +113,42 @@ public class User implements UserDetails, Serializable {
 		this.phone = phone;
 	}
 
-	@Override
-	public boolean isEnabled() {
-		return enabled;
-	}
+	
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public Set<UserRole> getUserRole() {
-		return userRole;
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
-	public void setUserRole(Set<UserRole> userRole) {
-		this.userRole = userRole;
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		userRole.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
-		return authorities;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 	
+	
+
+	public List<UserPayment> getUserPaymentList() {
+		return userPaymentList;
+	}
+
+	public void setUserPaymentList(List<UserPayment> userPaymentList) {
+		this.userPaymentList = userPaymentList;
+	}
+	
+	
+
+	public List<UserShipping> getUserShippingList() {
+		return userShippingList;
+	}
+
+	public void setUserShippingList(List<UserShipping> userShippingList) {
+		this.userShippingList = userShippingList;
+	}
+	
+	
+
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
@@ -172,7 +156,52 @@ public class User implements UserDetails, Serializable {
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
+	
 
+	public List<Order> getOrderList() {
+		return orderList;
+	}
 
+	public void setOrderList(List<Order> orderList) {
+		this.orderList = orderList;
+	}
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		Set<GrantedAuthority> authorities = new HashSet<>();
+		userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName())));
+		
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
+	
+	
+	
 }
+
+
+

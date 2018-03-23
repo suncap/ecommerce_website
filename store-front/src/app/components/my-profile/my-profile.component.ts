@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AppConst } from '../../constants/app-const';
 import { UserService } from '../../services/user.service';
+import { LoginService } from '../../services/login.service';
 import { User } from '../../models/User';
-import { LoginService} from '../../services/login.service';
-import { PaymentService} from '../../services/payment.service';
-import { ShippingService} from '../../services/shipping.service';
+import { Router } from '@angular/router';
+import { PaymentService } from '../../services/payment.service';
+import { ShippingService } from '../../services/shipping.service';
 import { UserPayment } from '../../models/user-payment';
 import { UserBilling } from '../../models/user-billing';
 import { UserShipping } from '../../models/user-shipping';
-import { Router } from '@angular/router';
+import { Order } from '../../models/order';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -17,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class MyProfileComponent implements OnInit {
 
-  private serverPath = AppConst.serverPath;
+	private serverPath = AppConst.serverPath;
 	private dataFetched = false;
 	private loginError:boolean;
 	private loggedIn:boolean;
@@ -46,12 +48,17 @@ export class MyProfileComponent implements OnInit {
 	private defaultUserShippingId: number;
 	private defaultShippingSet: boolean;
 
+  private orderList: Order[] = [];
+  private order:Order = new Order();
+  private displayOrderDetail:boolean;
+
 
   constructor(
   	private loginService: LoginService,
   	private userService: UserService,
   	private paymentService: PaymentService,
   	private shippingService: ShippingService,
+    private orderService: OrderService,
   	private router: Router
   	) { }
 
@@ -193,6 +200,12 @@ export class MyProfileComponent implements OnInit {
   	);
   }
 
+  onDisplayOrder(order: Order) {
+    console.log(order);
+    this.order=order;
+    this.displayOrderDetail=true;
+  }
+
 
 
   ngOnInit() {
@@ -209,6 +222,15 @@ export class MyProfileComponent implements OnInit {
 
   	this.getCurrentUser();
 
+    this.orderService.getOrderList().subscribe(
+       res => {
+         this.orderList = res.json();
+        },
+        error => {
+          console.log(error.text());
+        }
+      );
+
   	for (let s in AppConst.usStates) {
   		this.stateList.push(s);
   	}
@@ -223,9 +245,5 @@ export class MyProfileComponent implements OnInit {
   	this.userShipping.userShippingState="";
   	this.defaultShippingSet=false;
   }
-
-
-
-
 
 }
